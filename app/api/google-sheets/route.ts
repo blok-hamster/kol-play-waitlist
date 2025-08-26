@@ -1,115 +1,136 @@
 import { type NextRequest, NextResponse } from "next/server"
 
+interface IWhitelistData {
+  aiExperience: string;
+  copyTradingInterest: string;
+  cryptoExperience: string;
+  email: string;
+  mlTrust: string;
+  name: string;
+  referredBy?: string;
+  retweetLink?: string;
+  twitterUsername?: string;
+}
+
+interface BackendResponse {
+  message: string;
+  data: {
+    email: string;
+    inviteCode: string[];
+    position?: number;
+  };
+}
+
 export async function POST(request: NextRequest) {
   try {
     const formData = await request.json()
 
-    // Check if Google Apps Script URL is configured
-    if (!process.env.GOOGLE_APP_SCRIPT) {
-      console.error("GOOGLE_APP_SCRIPT environment variable is not set")
-      console.log(
-        "Available environment variables:",
-        Object.keys(process.env).filter((key) => key.includes("GOOGLE")),
-      )
+    // Check if Backend API URL is configured
+    // if (!process.env.BACKEND_API_URL) {
+    //   console.error("BACKEND_API_URL environment variable is not set")
+      
+    //   return NextResponse.json({
+    //     success: false,
+    //     message: "Backend API URL not configured",
+    //   }, { status: 500 })
+    // }
 
-      // Return mock data for development
+    // console.log("Backend API URL found:", process.env.BACKEND_API_URL)
+    // console.log("Submitting to backend whitelist:", formData)
+
+    // Validate required email field
+    if (!formData.email) {
       return NextResponse.json({
-        success: true,
-        referralCode: generateMockReferralCode(),
-        waitlistPosition: Math.floor(Math.random() * 5000) + 1000,
-        message: "Development mode - Google Apps Script URL not configured",
-      })
+        success: false,
+        message: "Email is required",
+      }, { status: 400 })
     }
 
-    console.log("Google Apps Script URL found:", process.env.GOOGLE_APP_SCRIPT)
-    console.log("Submitting to Google Sheets:", formData)
+    // Prepare whitelist data according to backend interface
+    const whitelistData: IWhitelistData = {
+      aiExperience: formData.aiExperience || '',
+      copyTradingInterest: formData.copyTradingInterest || '',
+      cryptoExperience: formData.cryptoExperience || '',
+      email: formData.email,
+      mlTrust: formData.mlTrust || '',
+      name: formData.name || '',
+      referredBy: formData.referredBy,
+      retweetLink: formData.retweetLink,
+      twitterUsername: formData.twitterUsername,
+    }
 
-    // Send data to Google Apps Script with proper headers and error handling
-    const response = await fetch(process.env.GOOGLE_APP_SCRIPT, {
+    // Send data to backend whitelist API
+    const response = await fetch(`${process.env.BACKEND_API_URL || 'inscribable-ai.up.railway.app'}/api/whitelist/add`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
       },
-      body: JSON.stringify(formData),
-      redirect: "follow", // Follow redirects automatically
+      body: JSON.stringify({ whitelistData }),
     })
 
-    console.log("Google Sheets response status:", response.status)
-    console.log("Google Sheets response URL:", response.url)
-    console.log("Google Sheets response headers:", Object.fromEntries(response.headers.entries()))
+    console.log("Backend response status:", response.status)
 
-    // Get the response text first
     const responseText = await response.text()
-    console.log("Google Sheets raw response:", responseText)
+    console.log("Backend raw response:", responseText)
 
-    // Check if response is HTML (error page)
-    if (responseText.includes("<HTML>") || responseText.includes("<!DOCTYPE")) {
-      console.error("Received HTML response instead of JSON - likely a Google Apps Script deployment issue")
-
-      // Return mock data when Google Apps Script has issues
-      return NextResponse.json({
-        success: true,
-        referralCode: generateMockReferralCode(),
-        waitlistPosition: Math.floor(Math.random() * 5000) + 1000,
-        message: "Google Apps Script deployment issue - using mock data",
-        debug: "Received HTML response instead of JSON",
-      })
-    }
-
-    if (!response.ok) {
-      throw new Error(`Google Sheets API returned status ${response.status}: ${responseText}`)
-    }
-
-    let result
+    let result: BackendResponse
     try {
       result = JSON.parse(responseText)
     } catch (parseError) {
-      console.error("Failed to parse Google Sheets response:", parseError)
+      console.error("Failed to parse backend response:", parseError)
       console.error("Raw response was:", responseText)
 
-      // Return mock data when parsing fails
+      return NextResponse.json({
+        success: false,
+        message: "Invalid response from backend",
+      }, { status: 500 })
+    }
+
+    if (response.status === 200) {
+      // Success - email added to whitelist
       return NextResponse.json({
         success: true,
-        referralCode: generateMockReferralCode(),
-        waitlistPosition: Math.floor(Math.random() * 5000) + 1000,
-        message: "JSON parsing failed - using mock data",
-        debug: "Could not parse response as JSON",
+        message: result.message,
+        referralCode: result.data.inviteCode?.[0] || null,
+        waitlistPosition: result.data.position || 1,
+        email: result.data.email,
+        inviteCodes: result.data.inviteCode,
       })
+    } else if (response.status === 409) {
+      // Email already whitelisted
+      return NextResponse.json({
+        success: true,
+        message: result.message,
+        referralCode: result.data.inviteCode?.[0] || null,
+        waitlistPosition: result.data.position || 1,
+        email: result.data.email,
+        inviteCodes: result.data.inviteCode,
+        alreadyWhitelisted: true,
+      })
+    } else if (response.status === 400) {
+      // Bad request (validation error)
+      return NextResponse.json({
+        success: false,
+        message: result.message,
+      }, { status: 400 })
+    } else {
+      // Other error
+      return NextResponse.json({
+        success: false,
+        message: result.message || "Failed to add email to whitelist",
+      }, { status: response.status })
     }
 
-    if (!result.success) {
-      throw new Error(result.error || "Google Sheets submission failed")
-    }
-
-    // Ensure we have the required fields
-    const finalResult = {
-      success: true,
-      referralCode: result.referralCode || generateMockReferralCode(),
-      waitlistPosition: result.waitlistPosition || Math.floor(Math.random() * 5000) + 1000,
-    }
-
-    console.log("Final result:", finalResult)
-    return NextResponse.json(finalResult)
   } catch (error) {
-    console.error("Google Sheets submission error:", error)
+    console.error("Backend whitelist submission error:", error)
 
-    // Return mock data instead of failing completely
     return NextResponse.json({
-      success: true,
-      referralCode: generateMockReferralCode(),
-      waitlistPosition: Math.floor(Math.random() * 5000) + 1000,
-      message: "Error occurred - using mock data",
-      debug: error instanceof Error ? error.message : "Unknown error",
-    })
+      success: false,
+      message: "Failed to connect to backend service",
+      error: error instanceof Error ? error.message : "Unknown error",
+    }, { status: 500 })
   }
 }
 
-function generateMockReferralCode(): string {
-  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-  let result = ""
-  for (let i = 0; i < 6; i++) {
-    result += chars.charAt(Math.floor(Math.random() * chars.length))
-  }
-  return result
-}
+

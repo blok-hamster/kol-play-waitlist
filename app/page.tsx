@@ -157,29 +157,8 @@ export default function KolplayWaitlist() {
         setReferralCode(result.referralCode)
         setWaitlistPosition(result.waitlistPosition)
 
-        // Try to send welcome email
-        try {
-          const emailResponse = await fetch("/api/send-welcome-email", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              email: formData.email,
-              name: formData.name,
-              waitlistPosition: result.waitlistPosition,
-              referralCode: result.referralCode,
-            }),
-          })
-
-          if (emailResponse.ok) {
-            console.log("Welcome email sent successfully")
-          } else {
-            console.warn("Failed to send welcome email:", await emailResponse.text())
-          }
-        } catch (emailError) {
-          console.warn("Failed to send welcome email:", emailError)
-        }
+        // Email is now sent automatically by the backend
+        console.log("Form submitted successfully - email sent by backend")
 
         nextStep()
       } else {
