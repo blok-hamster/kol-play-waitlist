@@ -60,7 +60,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Send data to backend whitelist API
-    const response = await fetch(`${process.env.BACKEND_API_URL || 'inscribable-ai.up.railway.app'}/api/whitelist/add`, {
+    const response = await fetch(`${process.env.BACKEND_API_URL || 'https://inscribable-ai.up.railway.app'}/api/whitelist/add`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -124,11 +124,16 @@ export async function POST(request: NextRequest) {
 
   } catch (error) {
     console.error("Backend whitelist submission error:", error)
+    console.error("Backend API URL:", process.env.BACKEND_API_URL)
 
     return NextResponse.json({
       success: false,
       message: "Failed to connect to backend service",
       error: error instanceof Error ? error.message : "Unknown error",
+      debug: {
+        backendUrl: process.env.BACKEND_API_URL,
+        errorType: error instanceof Error ? error.constructor.name : typeof error
+      }
     }, { status: 500 })
   }
 }
