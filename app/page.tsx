@@ -237,239 +237,239 @@ export default function KolplayWaitlist() {
       ),
     },
     // Step 2: AI/ML Familiarity
-    {
-      icon: <Braces className="w-6 h-6 text-white" />,
-      title: "Quick Questions",
-      subtitle: "Help us understand your background (1 of 4)",
-      content: (
-        <div className="space-y-4">
-          <div className="text-white text-base font-medium mb-3">
-            How familiar are you with AI and machine learning?
-          </div>
-          <RadioGroup
-            value={formData.aiExperience}
-            onValueChange={(value) => setFormData((prev) => ({ ...prev, aiExperience: value }))}
-            className="space-y-2"
-          >
-            {[
-              "Complete beginner - I've heard of it but don't understand it",
-              "Some knowledge - I understand basic concepts",
-              "Intermediate - I've used AI tools and understand how they work",
-              "Advanced - I have technical knowledge or work with AI",
-            ].map((option, index) => (
-              <div
-                key={index}
-                className={`flex items-start space-x-3 p-3 rounded-lg border transition-all duration-300 cursor-pointer backdrop-blur-md ${
-                  formData.aiExperience === option
-                    ? "border-purple-500/50 bg-purple-500/10 shadow-lg shadow-purple-500/20"
-                    : "border-white/20 hover:border-white/30 hover:bg-white/5"
-                }`}
-                onClick={() => setFormData((prev) => ({ ...prev, aiExperience: option }))}
-              >
-                <RadioGroupItem value={option} id={`ai-${index}`} className="text-purple-500 mt-0.5" />
-                <Label
-                  htmlFor={`ai-${index}`}
-                  className="text-gray-300 cursor-pointer flex-1 select-none leading-relaxed text-sm"
-                >
-                  {option}
-                </Label>
-              </div>
-            ))}
-          </RadioGroup>
-          <div className="flex gap-3">
-            <Button
-              onClick={prevStep}
-              variant="outline"
-              className="flex-1 border-white/20 text-gray-300 hover:bg-white/10 rounded-lg h-10 bg-white/5 backdrop-blur-md transition-all duration-300 text-sm"
-            >
-              <ArrowLeft className="mr-2 w-4 h-4" /> Back
-            </Button>
-            <Button
-              onClick={nextStep}
-              disabled={!formData.aiExperience}
-              className="flex-1 bg-gradient-to-r from-purple-600 to-teal-500 hover:from-purple-700 hover:to-teal-600 text-white rounded-lg h-10 disabled:opacity-50 transition-all duration-300 shadow-lg hover:shadow-xl text-sm"
-            >
-              Next <ArrowRight className="ml-2 w-4 h-4" />
-            </Button>
-          </div>
-        </div>
-      ),
-    },
-    // Step 3: Crypto Trading Experience
-    {
-      icon: <Braces className="w-6 h-6 text-white" />,
-      title: "Quick Questions",
-      subtitle: "Help us understand your background (2 of 4)",
-      content: (
-        <div className="space-y-4">
-          <div className="text-white text-base font-medium mb-3">
-            What's your experience with cryptocurrency trading?
-          </div>
-          <RadioGroup
-            value={formData.cryptoExperience}
-            onValueChange={(value) => setFormData((prev) => ({ ...prev, cryptoExperience: value }))}
-            className="space-y-2"
-          >
-            {[
-              "Never traded crypto before - complete beginner",
-              "Beginner - I've made a few trades but still learning",
-              "Intermediate - I trade regularly and understand the markets",
-              "Expert - I'm an experienced trader with advanced strategies",
-            ].map((option, index) => (
-              <div
-                key={index}
-                className={`flex items-start space-x-3 p-3 rounded-lg border transition-all duration-300 cursor-pointer backdrop-blur-md ${
-                  formData.cryptoExperience === option
-                    ? "border-purple-500/50 bg-purple-500/10 shadow-lg shadow-purple-500/20"
-                    : "border-white/20 hover:border-white/30 hover:bg-white/5"
-                }`}
-                onClick={() => setFormData((prev) => ({ ...prev, cryptoExperience: option }))}
-              >
-                <RadioGroupItem value={option} id={`crypto-${index}`} className="text-purple-500 mt-0.5" />
-                <Label
-                  htmlFor={`crypto-${index}`}
-                  className="text-gray-300 cursor-pointer flex-1 select-none leading-relaxed text-sm"
-                >
-                  {option}
-                </Label>
-              </div>
-            ))}
-          </RadioGroup>
-          <div className="flex gap-3">
-            <Button
-              onClick={prevStep}
-              variant="outline"
-              className="flex-1 border-white/20 text-gray-300 hover:bg-white/10 rounded-lg h-10 bg-white/5 backdrop-blur-md transition-all duration-300 text-sm"
-            >
-              <ArrowLeft className="mr-2 w-4 h-4" /> Back
-            </Button>
-            <Button
-              onClick={nextStep}
-              disabled={!formData.cryptoExperience}
-              className="flex-1 bg-gradient-to-r from-purple-600 to-teal-500 hover:from-purple-700 hover:to-teal-600 text-white rounded-lg h-10 disabled:opacity-50 transition-all duration-300 shadow-lg hover:shadow-xl text-sm"
-            >
-              Next <ArrowRight className="ml-2 w-4 h-4" />
-            </Button>
-          </div>
-        </div>
-      ),
-    },
-    // Step 4: Copy Trading Interest
-    {
-      icon: <Braces className="w-6 h-6 text-white" />,
-      title: "Quick Questions",
-      subtitle: "Help us understand your background (3 of 4)",
-      content: (
-        <div className="space-y-4">
-          <div className="text-white text-base font-medium mb-3">What's your experience with copy trading?</div>
-          <RadioGroup
-            value={formData.copyTradingInterest}
-            onValueChange={(value) => setFormData((prev) => ({ ...prev, copyTradingInterest: value }))}
-            className="space-y-2"
-          >
-            {[
-              "Never tried copy trading before",
-              "I've tried it a few times with small amounts",
-              "I regularly use copy trading platforms",
-              "I'm an experienced copy trader with multiple strategies",
-            ].map((option, index) => (
-              <div
-                key={index}
-                className={`flex items-start space-x-3 p-3 rounded-lg border transition-all duration-300 cursor-pointer backdrop-blur-md ${
-                  formData.copyTradingInterest === option
-                    ? "border-purple-500/50 bg-purple-500/10 shadow-lg shadow-purple-500/20"
-                    : "border-white/20 hover:border-white/30 hover:bg-white/5"
-                }`}
-                onClick={() => setFormData((prev) => ({ ...prev, copyTradingInterest: option }))}
-              >
-                <RadioGroupItem value={option} id={`copy-${index}`} className="text-purple-500 mt-0.5" />
-                <Label
-                  htmlFor={`copy-${index}`}
-                  className="text-gray-300 cursor-pointer flex-1 select-none leading-relaxed text-sm"
-                >
-                  {option}
-                </Label>
-              </div>
-            ))}
-          </RadioGroup>
-          <div className="flex gap-3">
-            <Button
-              onClick={prevStep}
-              variant="outline"
-              className="flex-1 border-white/20 text-gray-300 hover:bg-white/10 rounded-lg h-10 bg-white/5 backdrop-blur-md transition-all duration-300 text-sm"
-            >
-              <ArrowLeft className="mr-2 w-4 h-4" /> Back
-            </Button>
-            <Button
-              onClick={nextStep}
-              disabled={!formData.copyTradingInterest}
-              className="flex-1 bg-gradient-to-r from-purple-600 to-teal-500 hover:from-purple-700 hover:to-teal-600 text-white rounded-lg h-10 disabled:opacity-50 transition-all duration-300 shadow-lg hover:shadow-xl text-sm"
-            >
-              Next <ArrowRight className="ml-2 w-4 h-4" />
-            </Button>
-          </div>
-        </div>
-      ),
-    },
-    // Step 5: ML Trust
-    {
-      icon: <Braces className="w-6 h-6 text-white" />,
-      title: "Quick Questions",
-      subtitle: "Help us understand your background (4 of 4)",
-      content: (
-        <div className="space-y-4">
-          <div className="text-white text-base font-medium mb-3">
-            How much would you trust ML predictions for trading decisions?
-          </div>
-          <RadioGroup
-            value={formData.mlTrust}
-            onValueChange={(value) => setFormData((prev) => ({ ...prev, mlTrust: value }))}
-            className="space-y-2"
-          >
-            {[
-              "Completely - I'd follow all recommendations",
-              "Mostly - I'd use them as primary guidance",
-              "Partially - I'd use them as one factor among many",
-              "Skeptical - I'd rarely follow ML predictions",
-            ].map((option, index) => (
-              <div
-                key={index}
-                className={`flex items-start space-x-3 p-3 rounded-lg border transition-all duration-300 cursor-pointer backdrop-blur-md ${
-                  formData.mlTrust === option
-                    ? "border-purple-500/50 bg-purple-500/10 shadow-lg shadow-purple-500/20"
-                    : "border-white/20 hover:border-white/30 hover:bg-white/5"
-                }`}
-                onClick={() => setFormData((prev) => ({ ...prev, mlTrust: option }))}
-              >
-                <RadioGroupItem value={option} id={`ml-${index}`} className="text-purple-500 mt-0.5" />
-                <Label
-                  htmlFor={`ml-${index}`}
-                  className="text-gray-300 cursor-pointer flex-1 select-none leading-relaxed text-sm"
-                >
-                  {option}
-                </Label>
-              </div>
-            ))}
-          </RadioGroup>
-          <div className="flex gap-3">
-            <Button
-              onClick={prevStep}
-              variant="outline"
-              className="flex-1 border-white/20 text-gray-300 hover:bg-white/10 rounded-lg h-10 bg-white/5 backdrop-blur-md transition-all duration-300 text-sm"
-            >
-              <ArrowLeft className="mr-2 w-4 h-4" /> Back
-            </Button>
-            <Button
-              onClick={nextStep}
-              disabled={!formData.mlTrust}
-              className="flex-1 bg-gradient-to-r from-purple-600 to-teal-500 hover:from-purple-700 hover:to-teal-600 text-white rounded-lg h-10 disabled:opacity-50 transition-all duration-300 shadow-lg hover:shadow-xl text-sm"
-            >
-              Continue <ArrowRight className="ml-2 w-4 h-4" />
-            </Button>
-          </div>
-        </div>
-      ),
-    },
+    // {
+    //   icon: <Braces className="w-6 h-6 text-white" />,
+    //   title: "Quick Questions",
+    //   subtitle: "Help us understand your background (1 of 4)",
+    //   content: (
+    //     <div className="space-y-4">
+    //       <div className="text-white text-base font-medium mb-3">
+    //         How familiar are you with AI and machine learning?
+    //       </div>
+    //       <RadioGroup
+    //         value={formData.aiExperience}
+    //         onValueChange={(value) => setFormData((prev) => ({ ...prev, aiExperience: value }))}
+    //         className="space-y-2"
+    //       >
+    //         {[
+    //           "Complete beginner - I've heard of it but don't understand it",
+    //           "Some knowledge - I understand basic concepts",
+    //           "Intermediate - I've used AI tools and understand how they work",
+    //           "Advanced - I have technical knowledge or work with AI",
+    //         ].map((option, index) => (
+    //           <div
+    //             key={index}
+    //             className={`flex items-start space-x-3 p-3 rounded-lg border transition-all duration-300 cursor-pointer backdrop-blur-md ${
+    //               formData.aiExperience === option
+    //                 ? "border-purple-500/50 bg-purple-500/10 shadow-lg shadow-purple-500/20"
+    //                 : "border-white/20 hover:border-white/30 hover:bg-white/5"
+    //             }`}
+    //             onClick={() => setFormData((prev) => ({ ...prev, aiExperience: option }))}
+    //           >
+    //             <RadioGroupItem value={option} id={`ai-${index}`} className="text-purple-500 mt-0.5" />
+    //             <Label
+    //               htmlFor={`ai-${index}`}
+    //               className="text-gray-300 cursor-pointer flex-1 select-none leading-relaxed text-sm"
+    //             >
+    //               {option}
+    //             </Label>
+    //           </div>
+    //         ))}
+    //       </RadioGroup>
+    //       <div className="flex gap-3">
+    //         <Button
+    //           onClick={prevStep}
+    //           variant="outline"
+    //           className="flex-1 border-white/20 text-gray-300 hover:bg-white/10 rounded-lg h-10 bg-white/5 backdrop-blur-md transition-all duration-300 text-sm"
+    //         >
+    //           <ArrowLeft className="mr-2 w-4 h-4" /> Back
+    //         </Button>
+    //         <Button
+    //           onClick={nextStep}
+    //           disabled={!formData.aiExperience}
+    //           className="flex-1 bg-gradient-to-r from-purple-600 to-teal-500 hover:from-purple-700 hover:to-teal-600 text-white rounded-lg h-10 disabled:opacity-50 transition-all duration-300 shadow-lg hover:shadow-xl text-sm"
+    //         >
+    //           Next <ArrowRight className="ml-2 w-4 h-4" />
+    //         </Button>
+    //       </div>
+    //     </div>
+    //   ),
+    // },
+    // // Step 3: Crypto Trading Experience
+    // {
+    //   icon: <Braces className="w-6 h-6 text-white" />,
+    //   title: "Quick Questions",
+    //   subtitle: "Help us understand your background (2 of 4)",
+    //   content: (
+    //     <div className="space-y-4">
+    //       <div className="text-white text-base font-medium mb-3">
+    //         What's your experience with cryptocurrency trading?
+    //       </div>
+    //       <RadioGroup
+    //         value={formData.cryptoExperience}
+    //         onValueChange={(value) => setFormData((prev) => ({ ...prev, cryptoExperience: value }))}
+    //         className="space-y-2"
+    //       >
+    //         {[
+    //           "Never traded crypto before - complete beginner",
+    //           "Beginner - I've made a few trades but still learning",
+    //           "Intermediate - I trade regularly and understand the markets",
+    //           "Expert - I'm an experienced trader with advanced strategies",
+    //         ].map((option, index) => (
+    //           <div
+    //             key={index}
+    //             className={`flex items-start space-x-3 p-3 rounded-lg border transition-all duration-300 cursor-pointer backdrop-blur-md ${
+    //               formData.cryptoExperience === option
+    //                 ? "border-purple-500/50 bg-purple-500/10 shadow-lg shadow-purple-500/20"
+    //                 : "border-white/20 hover:border-white/30 hover:bg-white/5"
+    //             }`}
+    //             onClick={() => setFormData((prev) => ({ ...prev, cryptoExperience: option }))}
+    //           >
+    //             <RadioGroupItem value={option} id={`crypto-${index}`} className="text-purple-500 mt-0.5" />
+    //             <Label
+    //               htmlFor={`crypto-${index}`}
+    //               className="text-gray-300 cursor-pointer flex-1 select-none leading-relaxed text-sm"
+    //             >
+    //               {option}
+    //             </Label>
+    //           </div>
+    //         ))}
+    //       </RadioGroup>
+    //       <div className="flex gap-3">
+    //         <Button
+    //           onClick={prevStep}
+    //           variant="outline"
+    //           className="flex-1 border-white/20 text-gray-300 hover:bg-white/10 rounded-lg h-10 bg-white/5 backdrop-blur-md transition-all duration-300 text-sm"
+    //         >
+    //           <ArrowLeft className="mr-2 w-4 h-4" /> Back
+    //         </Button>
+    //         <Button
+    //           onClick={nextStep}
+    //           disabled={!formData.cryptoExperience}
+    //           className="flex-1 bg-gradient-to-r from-purple-600 to-teal-500 hover:from-purple-700 hover:to-teal-600 text-white rounded-lg h-10 disabled:opacity-50 transition-all duration-300 shadow-lg hover:shadow-xl text-sm"
+    //         >
+    //           Next <ArrowRight className="ml-2 w-4 h-4" />
+    //         </Button>
+    //       </div>
+    //     </div>
+    //   ),
+    // },
+    // // Step 4: Copy Trading Interest
+    // {
+    //   icon: <Braces className="w-6 h-6 text-white" />,
+    //   title: "Quick Questions",
+    //   subtitle: "Help us understand your background (3 of 4)",
+    //   content: (
+    //     <div className="space-y-4">
+    //       <div className="text-white text-base font-medium mb-3">What's your experience with copy trading?</div>
+    //       <RadioGroup
+    //         value={formData.copyTradingInterest}
+    //         onValueChange={(value) => setFormData((prev) => ({ ...prev, copyTradingInterest: value }))}
+    //         className="space-y-2"
+    //       >
+    //         {[
+    //           "Never tried copy trading before",
+    //           "I've tried it a few times with small amounts",
+    //           "I regularly use copy trading platforms",
+    //           "I'm an experienced copy trader with multiple strategies",
+    //         ].map((option, index) => (
+    //           <div
+    //             key={index}
+    //             className={`flex items-start space-x-3 p-3 rounded-lg border transition-all duration-300 cursor-pointer backdrop-blur-md ${
+    //               formData.copyTradingInterest === option
+    //                 ? "border-purple-500/50 bg-purple-500/10 shadow-lg shadow-purple-500/20"
+    //                 : "border-white/20 hover:border-white/30 hover:bg-white/5"
+    //             }`}
+    //             onClick={() => setFormData((prev) => ({ ...prev, copyTradingInterest: option }))}
+    //           >
+    //             <RadioGroupItem value={option} id={`copy-${index}`} className="text-purple-500 mt-0.5" />
+    //             <Label
+    //               htmlFor={`copy-${index}`}
+    //               className="text-gray-300 cursor-pointer flex-1 select-none leading-relaxed text-sm"
+    //             >
+    //               {option}
+    //             </Label>
+    //           </div>
+    //         ))}
+    //       </RadioGroup>
+    //       <div className="flex gap-3">
+    //         <Button
+    //           onClick={prevStep}
+    //           variant="outline"
+    //           className="flex-1 border-white/20 text-gray-300 hover:bg-white/10 rounded-lg h-10 bg-white/5 backdrop-blur-md transition-all duration-300 text-sm"
+    //         >
+    //           <ArrowLeft className="mr-2 w-4 h-4" /> Back
+    //         </Button>
+    //         <Button
+    //           onClick={nextStep}
+    //           disabled={!formData.copyTradingInterest}
+    //           className="flex-1 bg-gradient-to-r from-purple-600 to-teal-500 hover:from-purple-700 hover:to-teal-600 text-white rounded-lg h-10 disabled:opacity-50 transition-all duration-300 shadow-lg hover:shadow-xl text-sm"
+    //         >
+    //           Next <ArrowRight className="ml-2 w-4 h-4" />
+    //         </Button>
+    //       </div>
+    //     </div>
+    //   ),
+    // },
+    // // Step 5: ML Trust
+    // {
+    //   icon: <Braces className="w-6 h-6 text-white" />,
+    //   title: "Quick Questions",
+    //   subtitle: "Help us understand your background (4 of 4)",
+    //   content: (
+    //     <div className="space-y-4">
+    //       <div className="text-white text-base font-medium mb-3">
+    //         How much would you trust ML predictions for trading decisions?
+    //       </div>
+    //       <RadioGroup
+    //         value={formData.mlTrust}
+    //         onValueChange={(value) => setFormData((prev) => ({ ...prev, mlTrust: value }))}
+    //         className="space-y-2"
+    //       >
+    //         {[
+    //           "Completely - I'd follow all recommendations",
+    //           "Mostly - I'd use them as primary guidance",
+    //           "Partially - I'd use them as one factor among many",
+    //           "Skeptical - I'd rarely follow ML predictions",
+    //         ].map((option, index) => (
+    //           <div
+    //             key={index}
+    //             className={`flex items-start space-x-3 p-3 rounded-lg border transition-all duration-300 cursor-pointer backdrop-blur-md ${
+    //               formData.mlTrust === option
+    //                 ? "border-purple-500/50 bg-purple-500/10 shadow-lg shadow-purple-500/20"
+    //                 : "border-white/20 hover:border-white/30 hover:bg-white/5"
+    //             }`}
+    //             onClick={() => setFormData((prev) => ({ ...prev, mlTrust: option }))}
+    //           >
+    //             <RadioGroupItem value={option} id={`ml-${index}`} className="text-purple-500 mt-0.5" />
+    //             <Label
+    //               htmlFor={`ml-${index}`}
+    //               className="text-gray-300 cursor-pointer flex-1 select-none leading-relaxed text-sm"
+    //             >
+    //               {option}
+    //             </Label>
+    //           </div>
+    //         ))}
+    //       </RadioGroup>
+    //       <div className="flex gap-3">
+    //         <Button
+    //           onClick={prevStep}
+    //           variant="outline"
+    //           className="flex-1 border-white/20 text-gray-300 hover:bg-white/10 rounded-lg h-10 bg-white/5 backdrop-blur-md transition-all duration-300 text-sm"
+    //         >
+    //           <ArrowLeft className="mr-2 w-4 h-4" /> Back
+    //         </Button>
+    //         <Button
+    //           onClick={nextStep}
+    //           disabled={!formData.mlTrust}
+    //           className="flex-1 bg-gradient-to-r from-purple-600 to-teal-500 hover:from-purple-700 hover:to-teal-600 text-white rounded-lg h-10 disabled:opacity-50 transition-all duration-300 shadow-lg hover:shadow-xl text-sm"
+    //         >
+    //           Continue <ArrowRight className="ml-2 w-4 h-4" />
+    //         </Button>
+    //       </div>
+    //     </div>
+    //   ),
+    // },
     // Step 6: Social Media
     {
       icon: <Twitter className="w-6 h-6 text-white" />,
