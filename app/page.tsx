@@ -590,7 +590,7 @@ export default function KolplayWaitlist() {
               <div>
                 <div className="flex gap-2">
                   <div className="flex-1 bg-white/10 backdrop-blur-md rounded-lg px-3 py-2 text-gray-300 text-xs border border-white/20">
-                    https://www.kolplay.xyz?ref={referralCode}
+                    https://www.waitlist.kolplay.xyz?ref={referralCode}
                   </div>
                   <Button
                     onClick={() => copyToClipboard(`https://www.kolplay.xyz?ref=${referralCode}`, "link")}

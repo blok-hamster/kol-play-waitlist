@@ -60,7 +60,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Send data to backend whitelist API
-    const response = await fetch(`${process.env.BACKEND_API_URL || 'https://inscribable-ai.up.railway.app'}/api/whitelist/add`, {
+    const response = await fetch(`${process.env.BACKEND_API_URL || 'https://vps.kolplay.xyz'}/api/whitelist/add`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
